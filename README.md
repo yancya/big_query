@@ -6,19 +6,37 @@ Google BigQuery API client library
 
 Add this line to your application's Gemfile:
 
-    gem 'big_query'
+    gem 'big_query', github: "yancya/big_query"
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Or build and install it yourself as:
 
-    $ gem install big_query
+    $ git clone git@github.com:yancya/big_query.git
+    $ cd big_query
+    $ rake install
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+bq = BigQuery.new(
+  key_path: #path_to_secret_key
+  service_mail_address: #mail_address
+  project_id: #project_id
+)
+
+job = bq.jobs.query "select 1 as a, 2 as b, 3 as c"
+result = bq.jobs.get_query_results job["jobReference"]["jobId"]
+
+result["schema"]["fields"].map{|f| f["name"]}.join(",") #=> "a,b,c"
+result["rows"].map{|row| row["f"].map{|col| col["v"]}.join(",")} #=> ["1,2,3"]
+```
+
+## Google BigQuery API Reference
+
+https://developers.google.com/bigquery/docs/reference/v2/
 
 ## Contributing
 
