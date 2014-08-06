@@ -20,7 +20,7 @@ Or build and install it yourself as:
 
 ## Usage
 
-```
+```rb
 bq = BigQuery.new(
   key_path: #path_to_secret_key
   service_mail_address: #mail_address
