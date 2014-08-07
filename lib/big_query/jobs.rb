@@ -41,11 +41,13 @@ class BigQuery::Jobs
   end
 
   def query(project_id:, sql:)
-    execute(
+    resource = execute(
       api_method: @bq.jobs.query,
       body_object: {query: sql},
       parameters: {projectId: project_id}
     )
+
+    BigQuery::Job.new(resource: resource, client: @client)
   end
 end
 
