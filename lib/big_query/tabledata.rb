@@ -1,4 +1,4 @@
-require 'request_executer'
+require_relative 'request_executer'
 
 class BigQuery::Tabledata
   include RequestExecuter

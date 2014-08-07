@@ -1,30 +1,51 @@
 class BigQuery::Job
-  def initialize(resource, client)
+  def initialize(resource:, client:)
     @resource = resource
-    @jobs = Jobs.new(client: client)
+    @jobs = BigQuery::Jobs.new(client: client)
   end
 
   def query_results
     @jobs.get_query_results(
-      project_id: @resource[:jobReference][:projectId],
-      job_id: @resource[:jobReference][:jobId]
+      project_id: project_id,
+      job_id: job_id
     )
   end
 
+  def reload!
+
+  end
+
+  def project_id
+    job_reference["projectId"]
+  end
+
+  def job_id
+    job_reference["jobId"]
+  end
+
   def query
-    @resource[:configuration][:query][:query]
+    configuration["query"]["query"] rescue nil
   end
 
   def state
-    status[:state]
+    status["state"]
   end
 
   def errors
-    status[:errors]
+    status["errors"]
   end
 
   private
+
+  def configuration
+    @resource["configuration"]
+  end
+
   def status
-    @resource[:status][:errors]
+    @resource["status"]
+  end
+
+  def job_reference
+    @resource["jobReference"]
   end
 end

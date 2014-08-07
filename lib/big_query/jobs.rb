@@ -1,4 +1,5 @@
 require 'json'
+
 require_relative 'initializer'
 require_relative 'request_executer'
 require_relative 'job'
@@ -13,7 +14,7 @@ class BigQuery::Jobs
       parameters: {projectId: project_id, jobId: job_id}
     )
 
-    Job.new(resouece: resource, jobs: self)
+    BigQuery::Job.new(resource: resource, client: @client)
   end
 
   def get_query_results(project_id:, job_id:)
@@ -31,11 +32,11 @@ class BigQuery::Jobs
   def list(project_id:)
     resources = execute(
       api_method: @bq.jobs.list,
-      parameters: {projectId: project_id}
+      parameters: {projectId: project_id, projection: "full"}
     )
 
-    resources[:jobs].map{|job|
-      Job.new(resource: job, jobs: self)
+    resources["jobs"].map{|job|
+      BigQuery::Job.new(resource: job, client: @client)
     }
   end
 
