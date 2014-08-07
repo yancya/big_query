@@ -1,8 +1,11 @@
+require_relative 'jobs'
+require_relative 'datasets'
+
 class BigQuery::Project
   def initialize(resource:, client:)
     @resource = resource
-    @jobs = Jobs.new(client: client)
-    @datasets = Datasets.new(client: client)
+    @jobs = BigQuery::Jobs.new(client: client)
+    @datasets = BigQuery::Datasets.new(client: client)
   end
 
   def jobs
@@ -14,6 +17,6 @@ class BigQuery::Project
   end
 
   def project_id
-    @resource[:projectReference][:projectId]
+    @resource["projectReference"]["projectId"]
   end
 end

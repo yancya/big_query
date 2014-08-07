@@ -1,7 +1,9 @@
+require_relative 'tables'
+
 class BigQuery::Dataset
   def initialize(resource:, client:)
     @resource = resource
-    @tables = Tables.new(client: client)
+    @tables = BigQuery::Tables.new(client: client)
   end
 
   def tables
@@ -12,16 +14,16 @@ class BigQuery::Dataset
   end
 
   def project_id
-    dataset_reference[:projectId]
+    dataset_reference["projectId"]
   end
 
   def dataset_id
-    dataset_reference[:datasetId]
+    dataset_reference["datasetId"]
   end
 
   private
 
   def dataset_reference
-    @resource[:datasetReference]
+    @resource["datasetReference"]
   end
 end

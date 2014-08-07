@@ -1,6 +1,8 @@
 require_relative 'initializer'
 require_relative 'request_executer'
 
+require_relative 'dataset'
+
 class BigQuery::Datasets
   include Initializer
   include RequestExecuter
@@ -28,10 +30,17 @@ class BigQuery::Datasets
   end
 
   def list(project_id:)
-    execute(
+    resources = execute(
       api_method: @bq.datasets.list,
       parameters: {projectId: project_id}
     )
+
+    resources["datasets"].map{|resource|
+      BigQuery::Dataset.new(
+        resource: resource,
+        client: @client
+      )
+    }
   end
 
   def patch(project_id:, dataset:)
