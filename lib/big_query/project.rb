@@ -1,5 +1,19 @@
-require_relative 'initializer'
+class BigQuery::Project
+  def initialize(resource:, client:)
+    @resource = resource
+    @jobs = Jobs.new(client: client)
+    @datasets = Datasets.new(client: client)
+  end
 
-class Project
-  include Initializer
+  def jobs
+    @jobs.list(project_id: project_id)
+  end
+
+  def datasets
+    @datasets.list(project_id: project_id)
+  end
+
+  def project_id
+    @resource[:projectReference][:projectId]
+  end
 end

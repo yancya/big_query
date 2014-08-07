@@ -1,60 +1,30 @@
-require 'json'
-require_relative 'initializer'
+class BigQuery::Job
+  def initialize(resource, client)
+    @resource = resource
+    @jobs = Jobs.new(client: client)
+  end
 
-class Job
-  include Initializer
-
-  def get(job_id)
-    execute(
-      api_method: @bq.jobs.get,
-      body_object: nil,
-      parameters: {projectId: @project_id, jobId: job_id}
+  def query_results
+    @jobs.get_query_results(
+      project_id: @resource[:jobReference][:projectId],
+      job_id: @resource[:jobReference][:jobId]
     )
   end
 
-  def get_query_results(job_id)
-    execute(
-      api_method: @bq.jobs.get_query_results,
-      body_object: nil,
-      parameters: {projectId: @project_id, jobId: job_id}
-    )
+  def query
+    @resource[:configuration][:query][:query]
   end
 
-  def insert
-     execute(
-      api_method: @bq.jobs.insert,
-      body_object: nil,
-      parameters: {projectId: @project_id}
-    )
-  end    
-
-  def list
-    execute(
-      api_method: @bq.jobs.list,
-      body_object: nil,
-      parameters: {projectId: @project_id}
-    )
+  def state
+    status[:state]
   end
 
-  def query(sql)
-    execute(
-      api_method: @bq.jobs.query,
-      body_object: {query: sql},
-      parameters: {projectId: @project_id}
-    )
+  def errors
+    status[:errors]
   end
 
   private
-  def response_to_json(obj)
-    JSON.parse(obj.response.body)
-  end
-
-  def execute(api_method:, body_object:, parameters:)
-    response_to_json @client.execute(
-      api_method: api_method,
-      body_object: body_object,
-      parameters: parameters
-    )
+  def status
+    @resource[:status][:errors]
   end
 end
-
