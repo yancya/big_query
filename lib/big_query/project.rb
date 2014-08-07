@@ -8,6 +8,10 @@ class BigQuery::Project
     @datasets = BigQuery::Datasets.new(client: client)
   end
 
+  def query(sql)
+    @jobs.query(project_id: project_id, sql: sql)
+  end
+
   def jobs
     @jobs.list(project_id: project_id)
   end
