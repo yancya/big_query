@@ -9,12 +9,9 @@ require 'google/api_client'
 
 class BigQuery
   def initialize(key_path:,
-                 service_mail_address:,
+                 issuer:,
                  application_name: "github.com/yancya/big_query",
-                 application_version: BigQuery::VERSION,
-                 pass_phrase: "notasecret")
-    @key_path = key_path
-    @service_mail_address = service_mail_address
+                 application_version: BigQuery::VERSION)
 
     app_info = {
       application_name: application_name,
@@ -24,9 +21,9 @@ class BigQuery
     @client = Google::APIClient.new(app_info)
 
     asserter = Google::APIClient::JWTAsserter.new(
-      @service_mail_address,
+      issuer,
       "https://www.googleapis.com/auth/bigquery",
-      Google::APIClient::PKCS12.load_key(File.open(@key_path), pass_phrase)
+      Google::APIClient::PKCS12.load_key(File.open(key_path), "notasecret")
     )
  
     @client.authorization = asserter.authorize
