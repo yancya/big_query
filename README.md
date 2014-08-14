@@ -22,11 +22,14 @@ Or build and install it yourself as:
 
 ```rb
 bq = BigQuery.new(
-  key_path: #path_to_secret_key
-  issuer: #mail_address
+  key_path: "path_to_secret_key"
+  issuer: "mail@address"
 )
 
-job = bq.projects.list.first.query("select 1 as a, 2 as b, 3 as c")
+job = bq.projects.list.first.query(
+  project_id: "name_of_project",
+  sql: "select 1 as a, 2 as b, 3 as c"
+)
 result = job.query_results
 
 result["schema"]["fields"].map{|f| f["name"]}.join(",") #=> "a,b,c"
