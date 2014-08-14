@@ -30,7 +30,10 @@ job = bq.projects.list.first.query(
   project_id: "name_of_project",
   sql: "select 1 as a, 2 as b, 3 as c"
 )
-result = job.query_results
+
+begin
+  result = job.query_results
+end until result["jobComplete"]
 
 result["schema"]["fields"].map{|f| f["name"]}.join(",") #=> "a,b,c"
 result["rows"].map{|row| row["f"].map{|col| col["v"]}.join(",")} #=> ["1,2,3"]
