@@ -26,7 +26,7 @@ bq = BigQuery.new(
   issuer: "mail@address"
 )
 
-job = bq.projects.list.first.query(
+job = bq.jobs.query(
   project_id: "name_of_project",
   sql: "select 1 as a, 2 as b, 3 as c"
 )
