@@ -23,7 +23,7 @@ Or build and install it yourself as:
 ```rb
 bq = BigQuery.new(
   key_path: #path_to_secret_key
-  service_mail_address: #mail_address
+  issuer: #mail_address
 )
 
 job = bq.projects.list.first.query("select 1 as a, 2 as b, 3 as c")
@@ -39,7 +39,7 @@ https://developers.google.com/bigquery/docs/reference/v2/
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/big_query/fork )
+1. Fork it ( https://github.com/yancya/big_query/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
