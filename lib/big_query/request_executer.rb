@@ -2,7 +2,10 @@ module RequestExecuter
   private
 
   def response_to_json(obj)
-    JSON.parse(obj.response.body)
+    JSON.parse(obj.response.body).tap do |resource|
+      raise resource["error"].to_s if resource["error"]
+      break resource
+    end
   end
 
   def execute(api_method:, body_object: nil, parameters: nil)
