@@ -43,18 +43,18 @@ class BigQuery::Datasets
     }
   end
 
-  def patch(project_id:, dataset:)
+  def patch(project_id:, dataset_id:, dataset:)
     execute(
       api_method: @bq.datasets.patch,
-      parameters: {projectId: project_id},
+      parameters: {projectId: project_id, datasetId: dataset_id},
       body_object: dataset
     )
   end
 
-  def update(project_id:, datasaet_id:, dataset:)
+  def update(project_id:, dataset_id:, dataset:)
     execute(
       api_method: @bq.datasets.update,
-      parameters: {projectId: project_id, datasetId: datasaet_id},
+      parameters: {projectId: project_id, datasetId: dataset_id},
       body_object: dataset
     )
   end
