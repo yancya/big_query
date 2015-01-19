@@ -1,5 +1,7 @@
 # BigQuery
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/yancya/big_query?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Google BigQuery API client library
 
 ## Installation
