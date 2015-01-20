@@ -10,7 +10,7 @@ class BigQuery::Datasets
   def delete(project_id:, dataset_id:)
     execute(
       api_method: @bq.datasets.delete,
-      parameters: {projectId: project_id, datasetId: dataset_id}
+      parameters: {projectId: project_id, datasetId: dataset_id, deleteContents: true}
     )
   end
 
