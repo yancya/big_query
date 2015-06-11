@@ -1,5 +1,5 @@
 require 'test-unit'
-require_relative '../lib/big_query'
+require_relative '../lib/yancya/big_query'
 
 class TestBigQuery < Test::Unit::TestCase
   TEST_DATASET_ID = "test_dataset_for_yancya_big_query_gem"
@@ -19,7 +19,7 @@ class TestBigQuery < Test::Unit::TestCase
     }
 
   setup do
-    @bq = BigQuery.new(
+    @bq = Yancya::BigQuery.new(
       key_path: ENV["GCP_KEY_PATH"],
       issuer: ENV["GCP_ISSUER"]
     )

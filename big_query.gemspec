@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'big_query/version'
+require 'yancya/big_query/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "big_query"
-  spec.version       = BigQuery::VERSION
+  spec.name          = "yancya-big_query"
+  spec.version       = Yancya::BigQuery::VERSION
   spec.authors       = ["yancya"]
   spec.email         = ["yancya@upec.jp"]
   spec.summary       = %q{Google BigQuery API client library.}
