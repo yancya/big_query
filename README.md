@@ -8,22 +8,20 @@ Google BigQuery API client library
 
 Add this line to your application's Gemfile:
 
-    gem 'big_query', github: "yancya/big_query"
+    gem 'yancya-big_query'
 
 And then execute:
 
     $ bundle
 
-Or build and install it yourself as:
+Or install it yourself as:
 
-    $ git clone git@github.com:yancya/big_query.git
-    $ cd big_query
-    $ rake install
+    $ gem install yancya-big_query
 
 ## Usage
 
 ```rb
-bq = BigQuery.new(
+bq = Yancya::BigQuery.new(
   key_path: "path_to_secret_key"
   issuer: "mail@address"
 )
