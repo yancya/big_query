@@ -9,10 +9,17 @@ module Yancya
     include Initializer
     include RequestExecutor
 
+    def cancel(project_id:, job_id:)
+      execute(
+        api_method: @bq.api.jobs.cancel,
+        parameters: { projectId: project_id, jobId: job_id }
+      )
+    end
+
     def get(project_id:, job_id:)
       resource = execute(
         api_method: @bq.api.jobs.get,
-        parameters: {projectId: project_id, jobId: job_id}
+        parameters: { projectId: project_id, jobId: job_id }
       )
 
       BigQuery::Job.new(resource: resource, bq: @bq)
@@ -21,7 +28,7 @@ module Yancya
     def get_query_results(project_id:, job_id:)
       execute(
         api_method: @bq.api.jobs.get_query_results,
-        parameters: {projectId: project_id, jobId: job_id}
+        parameters: { projectId: project_id, jobId: job_id }
       )
     end
 
@@ -33,7 +40,7 @@ module Yancya
     def list(project_id:)
       resources = execute(
         api_method: @bq.api.jobs.list,
-        parameters: {projectId: project_id, projection: "full"}
+        parameters: { projectId: project_id, projection: "full" }
       )
 
       resources["jobs"].map{|job|
@@ -44,8 +51,8 @@ module Yancya
     def query(project_id:, sql:)
       resource = execute(
         api_method: @bq.api.jobs.query,
-        body_object: {query: sql},
-        parameters: {projectId: project_id}
+        body_object: { query: sql },
+        parameters: { projectId: project_id }
       )
 
       BigQuery::Job.new(resource: resource, bq: @bq)

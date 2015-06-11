@@ -54,34 +54,34 @@ module Yancya
         }
       )
 
-      resources["tables"].map{|resource|
+      (resources["tables"]||[]).map do |resource|
         BigQuery::Table.new(resource: resource, tables: self)
-      }
+      end
     end
 
-    def patch(project_id:, dataset_id:, table_id:, table_reference:)
+    def patch(project_id:, dataset_id:, table_id:, table:)
       resource = execute(
-        api_method: @bq.api.tables.get,
+        api_method: @bq.api.tables.patch,
         parameters: {
           datasetId: dataset_id,
           projectId: project_id,
           tableId: table_id,
         },
-        body_object: table_reference
+        body_object: table
       )
 
       BigQuery::Table.new(resource: resource, tables: self)
     end
 
-    def update(project_id:, dataset_id:, table_id:, table_reference:)
+    def update(project_id:, dataset_id:, table_id:, table:)
       resource = execute(
-        api_method: @bq.api.tables.get,
+        api_method: @bq.api.tables.update,
         parameters: {
           datasetId: dataset_id,
           projectId: project_id,
           tableId: table_id,
         },
-        body_object: table_reference
+        body_object: table
       )
 
       BigQuery::Table.new(resource: resource, tables: self)

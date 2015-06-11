@@ -13,9 +13,9 @@ module Yancya
         api_method: @bq.api.projects.list
       )
 
-      resources["projects"].map{|resource|
-        BigQuery::Project.new(resource: resource, client: @client)
-      }
+      resources["projects"].map do |resource|
+        BigQuery::Project.new(resource: resource, bq: @bq)
+      end
     end
   end
 end

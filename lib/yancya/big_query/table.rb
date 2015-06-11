@@ -17,6 +17,14 @@ module Yancya
       table_reference["tableId"]
     end
 
+    def description
+      @resource["description"]
+    end
+
+    def schema
+      @resource["schema"]
+    end
+
     def reload
       @tables.get(
         project_id: project_id,

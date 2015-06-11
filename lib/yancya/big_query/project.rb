@@ -8,8 +8,8 @@ module Yancya
 
     def initialize(resource:, bq:)
       @resource = resource
-      @jobs = BigQuery::Jobs.new(client: bq.client)
-      @datasets = BigQuery::Datasets.new(client: bq.client)
+      @jobs = BigQuery::Jobs.new(bq: bq)
+      @datasets = BigQuery::Datasets.new(bq: bq)
       @bq = bq
     end
 
