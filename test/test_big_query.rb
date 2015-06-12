@@ -167,10 +167,14 @@ class TestBigQuery < Test::Unit::TestCase
   def execute_query(sql)
     job = @bq.jobs.query(project_id: @project_id, sql: sql)
 
-    begin
-      result = job.query_results
-    end until result["jobComplete"]
+    loop.each_with_index do |_, index|
+      raise 'Job timeout' if index > 60
 
-    result
+      result = job.query_results
+
+      break result if result["jobComplete"]
+
+      sleep(1)
+    end
   end
 end
