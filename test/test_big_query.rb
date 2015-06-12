@@ -147,7 +147,7 @@ class TestBigQuery < Test::Unit::TestCase
       dataset_id: TEST_DATASET_ID,
       table_id: TEST_TABLE_ID,
       table: {
-        schema: schema.tap { |hash| hash["fields"] << { name: "hoge", type: "STRING" }; break hash }
+        schema: schema.tap { |hash| hash["fields"] << { name: "hoge", type: "STRING" } }
       }
     )
 

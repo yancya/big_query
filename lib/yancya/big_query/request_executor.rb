@@ -1,12 +1,14 @@
+require 'json'
+
 module Yancya
   module RequestExecutor
     private
 
     def response_to_json(obj)
       return {} if obj.response.body.empty?
+
       JSON.parse(obj.response.body).tap do |resource|
         raise resource["error"].to_s if resource["error"]
-        break resource
       end
     end
 
