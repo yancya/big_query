@@ -10,7 +10,34 @@ module Yancya
         @jobs.get_query_results(
           project_id: project_id,
           job_id: job_id
-        )
+        ).tap do |qr|
+          if qr["pageToken"]
+            warn <<-TEXT
+ This is a slice in all results.
+ You have not took rest results.
+ Perhaps all_query_results is useful.
+            TEXT
+          end
+        end
+      end
+
+      # caution: This method might return huge results
+      def all_query_results
+        loop.reduce([]) do |ary, _|
+          ary.tap do |a|
+            a << @jobs.get_query_results(
+              project_id: project_id,
+              job_id: job_id,
+              page_token: (ary.last||{})["pageToken"]
+            )
+          end
+
+          if (ary.last||{})["pageToken"].nil?
+            break ary
+          else
+            ary
+          end
+        end
       end
 
       def reload

@@ -154,6 +154,21 @@ class TestBigQuery < Test::Unit::TestCase
     assert { table.schema["fields"].map { |field| field["name"] }.include? "hoge" }
   end
 
+  test "all_query_results" do
+    job = @bq.jobs.query(project_id: @project_id, sql: <<-SQL)
+    SELECT 2 as a, 4 as b, 6 as c
+    SQL
+
+    begin
+      results = job.all_query_results
+      sleep(1)
+    end until results.first["jobComplete"]
+
+    assert do
+      "2,4,6" == results.first["rows"].map{|row| row["f"].map{|col| col["v"]}.join(",")}.first
+    end
+  end
+
   private
 
   def create_table

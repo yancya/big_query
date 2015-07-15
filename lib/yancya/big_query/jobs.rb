@@ -20,10 +20,14 @@ module Yancya
        BigQuery::Job.new(resource: resource, bq: @bq)
      end
 
-     def get_query_results(project_id:, job_id:)
+     def get_query_results(project_id:, job_id:, page_token: nil)
        execute(
          api_method: @bq.api.jobs.get_query_results,
-         parameters: { projectId: project_id, jobId: job_id }
+         parameters: {
+           projectId: project_id,
+           jobId: job_id,
+           pageToken: page_token
+         }
        )
      end
 
